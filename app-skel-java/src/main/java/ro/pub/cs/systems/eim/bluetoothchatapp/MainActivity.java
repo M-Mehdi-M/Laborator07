@@ -68,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 1: Implement the method that initializes the views
     private void initViews() {
+        ListView chatListView = findViewById(R.id.chatListView);
+        messageEditText = findViewById(R.id.messageEditText);
+        sendButton = findViewById(R.id.sendButton);
+        listDevicesButton = findViewById(R.id.listDevicesButton);
+
+        chatMessages = new ArrayList<>();
+        chatArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
+        chatListView.setAdapter(chatArrayAdapter);
+
+        listDevicesButton.setOnClickListener(v -> listPairedDevices());
     }
 
     // TODO 2: Implement the method that initializes Bluetooth
