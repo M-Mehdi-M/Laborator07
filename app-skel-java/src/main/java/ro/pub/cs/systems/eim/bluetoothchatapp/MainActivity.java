@@ -82,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 2: Implement the method that initializes Bluetooth
     private void initBluetooth() {
-
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not available.", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     // TODO 3: Implement the method that checks permissions
