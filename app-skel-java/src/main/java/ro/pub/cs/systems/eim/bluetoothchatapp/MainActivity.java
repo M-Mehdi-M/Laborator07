@@ -127,7 +127,14 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 7: Implement the method that sends a message to the connected device
     private void sendMessage() {
-
+        sendButton.setOnClickListener(v -> {
+            String message = messageEditText.getText().toString();
+            if (!message.isEmpty() && connectedThread != null) {
+                connectedThread.write(message.getBytes());
+                messageEditText.setText("");
+                addChatMessage("Me: " + message);
+            }
+        });
     }
 
     // Update the UI with a new message
