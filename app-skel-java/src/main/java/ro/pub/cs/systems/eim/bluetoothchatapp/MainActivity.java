@@ -203,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if (acceptThread != null) acceptThread.cancel();
+        if (connectThread != null) connectThread.cancel();
+        if (connectedThread != null) connectedThread.cancel();
     }
 }
