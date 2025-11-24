@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 6: Implement server socket to listen for incoming connections
     private void startServer() {
+        acceptThread = new AcceptThread(this, bluetoothAdapter, MY_UUID);
+        acceptThread.start();
     }
 
     // TODO 7: Implement the method that sends a message to the connected device
