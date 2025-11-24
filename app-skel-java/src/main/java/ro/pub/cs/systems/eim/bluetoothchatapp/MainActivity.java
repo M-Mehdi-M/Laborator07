@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 3: Implement the method that checks permissions
     private void checkPermissions() {
-
+        requestPermissions();
     }
 
     // TODO 5: Implement the method that displays a dialog for selecting a paired device
@@ -112,6 +112,17 @@ public class MainActivity extends AppCompatActivity {
     public void addChatMessage(String message) {
         chatMessages.add(message);
         chatArrayAdapter.notifyDataSetChanged();
+    }
+
+    private void requestPermissions() {
+        List<String> permissions = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+            permissions.add(Manifest.permission.BLUETOOTH_SCAN);
+        } else {
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), REQUEST_PERMISSIONS);
     }
 
     public void manageConnectedSocket(BluetoothSocket socket) {
