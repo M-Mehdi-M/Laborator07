@@ -96,7 +96,27 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO 5: Implement the method that displays a dialog for selecting a paired device
     private void listPairedDevices() {
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        List<String> deviceList = new ArrayList<>();
+        final List<BluetoothDevice> devices = new ArrayList<>();
+        if (!pairedDevices.isEmpty()) {
+            for (BluetoothDevice device : pairedDevices) {
+                deviceList.add(device.getName() + "\n" + device.getAddress());
+                devices.add(device);
+            }
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Device");
+        ArrayAdapter<String> deviceArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, deviceList);
+        builder.setAdapter(deviceArrayAdapter, (dialog, which) -> {
+            selectedDevice = devices.get(which);
+            connectThread = new ConnectThread(this, bluetoothAdapter, selectedDevice, MY_UUID);
+            connectThread.start();
+        });
+        builder.show();
     }
 
     // TODO 6: Implement server socket to listen for incoming connections
